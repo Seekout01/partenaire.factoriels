@@ -1,0 +1,23 @@
+{
+  "name": "daara-v1.0.1",
+  "version": "1.0.1",
+  "description": "Programme informatique de gestion intuitve des établissements éducatifs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Factoriels/daara-v1.0.1.git"
+  },
+  "keywords": [
+    "Bonjour",
+    "!"
+  ],
+  "author": "Factoriels Sarl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Factoriels/daara-v1.0.1/issues"
+  },
+  "homepage": "https://github.com/Factoriels/daara-v1.0.1#readme"
+}
