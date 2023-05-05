@@ -19,7 +19,7 @@
 	      		<nav class="wsmenu clearfix blue-header">
 	        		<ul class="wsmenu-list">
 						<li class="nl-simple" aria-haspopup="true">
-							<a href="contacts-1.html" class="header-btn btn-primary tra-black-hover last-link">Laissez-nous un mot</a>
+							<a href="<?=yii::$app->request->baseUrl.'/'.md5('visiteur_contact') ?>" class="header-btn btn-primary tra-black-hover last-link">Laissez-nous un mot</a>
 						</li>
 	        		</ul>
 	        	</nav>

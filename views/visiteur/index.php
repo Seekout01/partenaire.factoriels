@@ -20,87 +20,38 @@
 
 					<div class="row">
 
-						<!-- SERVICE BOX #2 -->
-						<div class="col-md-6 col-lg-6">
-							<div class="sbox-4 icon-sm">
-								<a href="visa-details.html">
+
+					
+				     	<?php
+							if(sizeof($produit)>0){
 								
-									<!-- Icon -->
-									<div class="sbox-4-icon primary-color"><span class="flaticon-023-wallet"></span></div>
-							
-									<!-- Text -->
-									<div class="sbox-4-txt">
-										<h5 class="h5-md darkblue-color">SANTEYAH</h5>
-										<p>Optimisez l'efficacité de votre structure de soins avec Santeyah, qui facilite la gestion des dossiers médicaux, la coordination des soins et l'amélioration de la qualité des soins pour vos patients.</p>
-										<a href="contacts-1.html"  style="margin-top: 12px;" class="btn btn-md btn-primary black-hover">DEVENIR PARTENAIRE</a>
-									</div>
-
-								</a>
-							</div>							
-						</div>
-
-
-						<!-- SERVICE BOX #1 -->
-						<div class="col-md-6 col-lg-6">
-							<div class="sbox-4 icon-sm">
-								<a href="visa-details.html">
-								
-									<!-- Icon -->
-									<div class="sbox-4-icon primary-color"><span class="flaticon-431-bank"></span></div>
-							
-									<!-- Text -->
-									<div class="sbox-4-txt">
-										<h5 class="h5-md darkblue-color">Daara</h5>
-										<p>Gagnez en efficacité et en sécurité dans la gestion de vos effectifs et paiements grâce à notre solution numérique, automatisant les rappels et contrôles pour une gestion simplifiée et optimisée</p>
-										<a href="contacts-1.html"  style="margin-top: 12px;" class="btn btn-md btn-primary black-hover">DEVENIR PARTENAIRE</a>
-									</div>
-
-								</a>
-							</div>							
-						</div>
+								foreach ($produit as $key => $value) {
+									echo '
+									<!-- SERVICE BOX #2 -->
+									<div class="col-md-6 col-lg-6">
+										<div class="sbox-4 icon-sm">
+											<a href="visa-details.html">
+											
+												<!-- Icon -->
+												<div class="sbox-4-icon primary-color"><span class="flaticon-295-folder-3"></span></div>
+										
+												<!-- Text -->
+												<div class="sbox-4-txt">
+													<h5 class="h5-md darkblue-color">'.$value['libelle'].'</h5>
+													<p>'.$value['description'].'</p>
+													<a href="'.yii::$app->request->baseUrl.'/'.md5('visiteur_initier').'/'.$value['code'].'"  style="margin-top: 12px;" class="btn btn-md btn-primary black-hover">DEVENIR PARTENAIRE</a>
+												</div>
+			
+											</a>
+										</div>							
+									</div>';
+								}
+							}
 
 
-						
+						?>
 
-
-						<!-- SERVICE BOX #3 -->
-						<div class="col-md-6 col-lg-6">
-							<div class="sbox-4 icon-sm">
-								<a href="visa-details.html">
-								
-									<!-- Icon -->
-									<div class="sbox-4-icon primary-color"><span class="flaticon-004-wrench"></span></div>
-							
-									<!-- Text -->
-									<div class="sbox-4-txt">
-										<h5 class="h5-md darkblue-color">OPTIMISONS</h5>
-										<p>Gérer efficacement votre trésorerie et votre facturation avec optimisons, qui offre une visibilité complète sur les flux de trésorerie, la facturation et une gestion efficace des paiements clients pour votre entreprise.</p>
-										<a href="contacts-1.html" style="margin-top: 12px;" class="btn btn-md btn-primary black-hover">DEVENIR PARTENAIRE</a>
-									</div>
-
-								</a>
-							</div>							
-						</div>
-
-						<!-- SERVICE BOX #3 -->
-						<div class="col-md-6 col-lg-6">
-							<div class="sbox-4 icon-sm">
-								<a href="visa-details.html">
-								
-									<!-- Icon -->
-									<div class="sbox-4-icon primary-color"><span class="flaticon-004-wrench"></span></div>
-							
-									<!-- Text -->
-									<div class="sbox-4-txt">
-										<h5 class="h5-md darkblue-color">OPTIMISONS</h5>
-										<p>Gérer efficacement votre trésorerie et votre facturation avec optimisons, qui offre une visibilité complète sur les flux de trésorerie, la facturation et une gestion efficace des paiements clients pour votre entreprise.</p>
-										<a href="contacts-1.html" style="margin-top: 12px;" class="btn btn-md btn-primary black-hover">DEVENIR PARTENAIRE</a>
-									</div>
-
-								</a>
-							</div>							
-						</div>
-
+				
 
 						
 
@@ -127,7 +78,7 @@
 						<div class="col-md-12 section-title center white-color">		
 
 			 				<!-- Title -->
-							<h2 class="h2-xs">Why Choose ImmiEx?</h2>
+							<h2 class="h2-xs">Pourquoi choisire factoriels?</h2>
 
 							<!-- Text -->	
 							<p class="p-md">Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, 
@@ -140,17 +91,29 @@
 
 					<div class="row">
 
+						<!-- STATISTIC BLOCK #1 -->
+						<div class="col-md-6 col-lg-3">							
+							<div class="statistic-block icon-sm">
+
+								<!-- Icon -->
+								<span class="flaticon-431-bank"></span>
+								<!-- Text -->
+								<h5 class="primary-color"><span class="count-element"><?= $paretenaire ?></span>+</h5>
+								<p class="p-md">Partenaires</p>	
+
+							</div>								
+						</div>
 
 						<!-- STATISTIC BLOCK #1 -->
 						<div class="col-md-6 col-lg-3">							
 							<div class="statistic-block icon-sm">
 
 								<!-- Icon -->
-								<span class="flaticon-316-mortarboard"></span>
+								<span class="flaticon-032-user-3"></span>
 
 								<!-- Text -->
-								<h5 class="primary-color"><span class="count-element">820</span>+</h5>
-								<p class="p-md">Students</p>	
+								<h5 class="primary-color"><span class="count-element"><?= $totalPersonnel ?></span>+</h5>
+								<p class="p-md">Personnel</p>	
 
 							</div>								
 						</div>
@@ -160,11 +123,11 @@
 							<div class="statistic-block icon-sm">
 		
 								<!-- Icon -->
-								<span class="flaticon-431-bank"></span>
+								<span class="flaticon-295-folder-3	"></span>
 
 								<!-- Text -->
-								<h5 class="primary-color"><span class="count-element">127</span></h5>
-								<p class="p-md">Universities</p>	
+								<h5 class="primary-color"><span class="count-element"><?= $totalproduit ?></span></h5>
+								<p class="p-md">Produit</p>	
 
 							</div>						
 						</div>
@@ -177,25 +140,12 @@
 								<span class="flaticon-285-internet-2"></span>
 
 								<!-- Text -->
-								<h5 class="primary-color"><span class="count-element">81</span></h5>
-								<p class="p-md">Countries</p>	
+								<h5 class="primary-color"><span class="count-element">2</span></h5>
+								<p class="p-md">Pays</p>	
 
 							</div>						
 						</div>
 
-						<!-- STATISTIC BLOCK #4 -->
-						<div class="col-md-6 col-lg-3">											
-							<div class="statistic-block icon-sm">
-
-								<!-- Icon -->
-								<span class="flaticon-067-suitcase-1"></span>
-
-								<!-- Text -->
-								<h5 class="primary-color"><span class="count-element">969</span></h5>
-								<p class="p-md">Immigrations</p>	
-
-							</div>							
-						</div>
 
 
 					</div>	<!-- End row -->
@@ -219,7 +169,7 @@
 						<div class="col-md-12 section-title center">			
 
 			 				<!-- Title -->
-							<h2 class="h2-xs darkblue-color">What Our Clients Say</h2>
+							<h2 class="h2-xs darkblue-color">Ce que disent nos clients</h2>
 
 							<!-- Text -->	
 							<p class="p-md">Cursus porta, feugiat primis in ultrice ligula risus auctor tempus dolor feugiat, 

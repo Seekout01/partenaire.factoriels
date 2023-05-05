@@ -34,7 +34,7 @@ class MainAsset extends AssetBundle
     ];
     public $js = [
 
-        'web/mainAssets/js/jquery-3.3.1.min.js',
+        // 'web/mainAssets/js/jquery-3.3.1.min.js',
 		'web/mainAssets/js/bootstrap.min.js',	
 		'web/mainAssets/js/modernizr.custom.js',
 		'web/mainAssets/js/jquery.easing.js',
@@ -60,6 +60,6 @@ class MainAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        //'yii\bootstrap5\BootstrapAsset'
+        'yii\bootstrap5\BootstrapAsset'
     ];
 }

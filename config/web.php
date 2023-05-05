@@ -15,11 +15,14 @@ $config = [
     ],
     'components' => [
 
-        'visiteurClass'=>[
-            'class'=>'app\components\visiteurClass',
+        'accessClass'=>[
+            'class'=>'app\components\accessClass',
         ],
       
      
+        'visiteurClass'=>[
+            'class'=>'app\components\visiteurClass',
+        ],
     
         'nonSqlClass'=>[
             'class' => 'app\components\nonSqlClass', // CLass pour les fichiers
@@ -32,6 +35,10 @@ $config = [
 
         'mainCLass' => [
             'class' => 'app\components\mainClass', //class pour les configurations
+          ],
+
+          'cryptoClass' => [
+            'class' => 'app\components\cryptoClass', //class pour les configurations
           ],
 
           'entiteCLass' => [
@@ -87,6 +94,13 @@ $config = [
                
 
                 md5('visiteur_index')=>'visiteur/index',
+                md5('visiteur_addentite')=>'visiteur/addentite',
+                md5('visiteur_uniqdata')=>'visiteur/uniqdata',
+                md5('visiteur_initier').'/<codeservice:\w+>'=>'visiteur/initier',
+                md5('visiteur_bienvenue')=>'visiteur/bienvenue',
+                md5('visiteur_finaliser').'/<codesepartenariat:\w+>'=>'visiteur/finaliser',
+                md5('visiteur_addfinaliser')=>'visiteur/addfinaliser',
+                md5('visiteur_contact')=>'visiteur/contact',
 
                     //BASIQUES RULES
                 md5('site_allajax')=>'site/allajax',

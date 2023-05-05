@@ -18,7 +18,11 @@
     Class nonSqlClass extends Component {
 
 
-      public function objectToArray($d) 
+
+
+
+
+  public function objectToArray($d) 
       {
           if (is_object($d)) {
               // Gets the properties of the given object
@@ -43,29 +47,26 @@
       #************************************************************************************************
       # FANGNI
       #************************************************************************************************
-          //liste des types d'Entite
-          public function listEntite(){
-            $typeEntite= [
-            
-              '1'=>['code'=>'1','libelle'=>'Etat'],
-              '2'=>['code'=>'2','libelle'=>'Intitution'],
-              '3'=>['code'=>'3','libelle'=>'Association'],
-              '4'=>['code'=>'1','libelle'=>'Ets'],
-            
-            ];
-          //  var_dump($mois[3]['code']);die();
-            return $typeEntite;
-        }
+              //liste des types d'Entite
+              public function listEntite(){
+                $typeEntite= [
+                
+                  '1'=>'SARLU',
+                  '2'=>'SARL',
+                  '3'=>'SA',
+                  '4'=>'S ETAT',
+                  '5'=>'ETS/Ese',
+                  '6'=>'O.N.G',
+                  '7'=>'AMBASSADE',
+                  '8'=>'ASSOCIATION',
+                
+                ];
+              //  var_dump($mois[3]['code']);die();
+                return $typeEntite;
+            }    
+    
 
 
-        public function listeDesPlanification(){
-          $panifiation=[
-            '1'=>['code'=>'1','libelle'=>'Petit Déjeuner'],
-            '2'=>['code'=>'2','libelle'=>'Déjeuner'],
-            '3'=>['code'=>'3','libelle'=>'Diner'],
-          ];
-          return $panifiation;
-        }
         //retrouver le genre
         public function genderLabel($genderId){
           $genderLabel = Null;
@@ -131,13 +132,11 @@
           break;
         }
 
-        return '<div class="card-body pt-0">
-                  <div class="d-flex align-items-center bg-'.$color.' rounded p-5 mb-7">
-                    <div class="flex-grow-1 me-2">
-                      <h3 class="card-title fw-bold text-black"><i class="fa fa-bell white-color text-black">&nbsp;</i> '.$msg.'</h3>
-                    </div>
-                  </div>
-                </div>';
+        return '
+        
+                <div class="col-md-12 comment-form-msg bg-'.$color.' text-center">
+                    <div class="sending-msg"><span class="text-white"> '.$msg.'</span></div>
+                </div>  ';
         
       }
 
@@ -591,43 +590,7 @@
           }
       }
 
-      //public function envoi msg
-      public function envoieSms($from,$message,$to){
-       
-        $client = new Client([
-          'base_uri' => "https://mpvvk6.api.infobip.com/",
-          'headers' => [
-              'Authorization' => "App fa42c1ea0022da7f21d963db3f58ec4d-d4790c9f-bf7f-4cad-adf2-a5fef474ac76",
-              'Content-Type' => 'application/json',
-              'Accept' => 'application/json',
-          ]
-      ]);
-      try {
-      
-      $response = $client->request(
-          'POST',
-          'sms/2/text/advanced',
-          [
-              RequestOptions::JSON => [
-                  'messages' => [
-                      [
-                          'from' => $from,
-                          'destinations' => [
-                              ['to' => $to]
-                          ],
-                          'text' =>$message,
-                      ]
-                  ]
-              ],
-          ]
-      );
-        //code...
-      } catch (\Throwable $th) {
-        //throw $th;
-      }
-      
-    
-    }
+   
 
 
     }

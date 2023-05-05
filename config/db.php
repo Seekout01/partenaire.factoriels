@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'pgsql:host=localhost;port=5432;dbname=factorielsDb', 
+    'dsn' => 'pgsql:host=localhost;port=5432;dbname=factorielsdb', 
     'username' => 'postgres',
-    'password' => 'S33k0u1@123',
+    'password' => 'root',
     'charset' => 'utf8',
     // 'schemaMap'=>[
     //     'pgsql'=>[

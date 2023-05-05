@@ -62,45 +62,8 @@ class SiteController extends Controller {
     public function actionDeconnecter(){
       Yii::$app->getSession()->destroy();
     }
-
     //statiatique
-    public function actionStatisqueeffectif(){
-      Yii::$app->response->format = Response::FORMAT_JSON;
-      // $effectifByMans ="";
-      //   $effectifByWomens="";
-      // $codeAnneeScolaire = Yii::$app->nonSqlClass->getActiveAnneeScolaire();
-      // $codeEts = Yii::$app->nonSqlClass->getActiveCodeEts();
-      $codeEntite = yii::$app->nonSqlClass->getActiveEnt();
-      $nbPersonnelEntrprise = Yii::$app->personnelCLass->nbPersonnelEntrprise($codeEntite);
-      // return $nbPersonnelEntrprise;
-      $nbPersonelPartenaire = Yii::$app->personnelCLass->nbPersonelPartenaire($codeEntite);
-      $nbGuest = Yii::$app->personnelCLass->nbGuest($codeEntite);
 
-      $statistiquePartenaire=Yii::$app->personnelCLass->statistiquePartenaire($codeEntite);
-      // $effectifByClass = Yii::$app->encadreClass->getEffectiveEncadreByClass($codeEts,$codeAnneeScolaire);
-      // $effectifByMan = Yii::$app->encadreClass->getEffectiveEncadreByGenderMan($codeEts,$codeAnneeScolaire);
-      // $effectifByWomen = Yii::$app->encadreClass->getEffectiveEncadreByGenderWomen($codeEts,$codeAnneeScolaire);
-      // $effectifByWomen = Yii::$app->encadreClass->getEffectiveEncadreByGenderWomen($codeEts,$codeAnneeScolaire);
-      
-      // if(isset($effectifByMan) && !empty($effectifByMan)){
-      //   $effectifByMans=$effectifByMan;
-      // }
-      // if(isset($effectifByWomen) && !empty($effectifByWomen)){
-      //   $effectifByWomens =$effectifByWomen;
-      // }
-      
-     
-      $effectiffs = [
-             "Partenaire" =>['Partenaires' ,$nbPersonelPartenaire['nbrPartenaire']],
-             "PersonnelEntrprise" => ['SIMFER' ,$nbPersonnelEntrprise['nbPersonnel']],
-             "Guest" => ['Guest' ,$nbGuest['nbguest']],
-             'statistiquePartenaire'=>$statistiquePartenaire,
-
-            
-       ];
-        return $effectiffs;
-    }
-   
 
    
 }
