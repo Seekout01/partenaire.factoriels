@@ -1,6 +1,16 @@
      <?php
 
 return [
+
+
+
+
+    //profil
+    'Santeyah'=>'b83866c2e1140f',
+    'Optimisons'=>'7d49f0711f6beb',
+    'Atex'=>'b4e79c81b8be1e',
+
+
     'app_name'=>'Daara Solution',
 
         // Version 1.0.0

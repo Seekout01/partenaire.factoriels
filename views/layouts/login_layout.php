@@ -36,6 +36,7 @@ $this->beginPage()
 
   
   <?php $this->beginBody() ?>
+  
   <?= $this->render('main_component/content.php', ['content' => $content]) ?>
 
   <?php $this->endBody() ?>

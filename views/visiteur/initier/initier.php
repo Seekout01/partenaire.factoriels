@@ -1,83 +1,94 @@
-
-
- 
- <div class="row m-2">
-      
-            <div class="col-lg-4 m-auto">
-                <div id="leave-comment">
-                    	<!--begin::Content-->
-					<div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
-						<!--begin::Image-->
-						<!--begin::Image-->
-						<img class="theme-light-show mx-auto mw-100 w-150px w-lg-450px mb-10 mb-lg-20" src="/../partenaire.administration.factoriels/web/mainAssets/media/uploads/photo/<?=$produit['background']?>" alt="" />
-                          <!--end::Image-->
-                 </div>
-                
-            </div>
-        </div>
-        <div class="col-lg-4  m-auto">
-                <div id="leave-comment">
-                
-                    <!-- Title -->
-                    <h5 class="h5-xl noto-font-700 purple-color">Initiez gratuitement
-                       votre Espace Partenaire</h5>
-                    
-                      
-                       <?= Yii::$app->session->getFlash('flashmsg'); Yii::$app->session->removeFlash('flashmsg'); ?>
-
-                        <form name="commentForm" method="post" class="row comment-form" action="<?= Yii::$app->request->baseUrl."/".md5("visiteur_addentite");?>" novalidate="novalidate">
+<!--begin::Root-->
+<div class="d-flex flex-column flex-root" id="kt_app_root">
+    <!--begin::Authentication - Sign-in -->
+    <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+        <!--begin::Body-->
+        <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1 flex-center flex-column flex-lg-row-fluid">
+            <!--begin::Form-->
+            <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                <!--begin::Wrapper-->
+                <div class="w-lg-500px p-5">
+                    <!--begin::Form-->
+                    <form id="initierform" name="commentForm" method="post" class="row comment-form" action="<?= Yii::$app->request->baseUrl."/".md5("visiteur_addentite");?>" novalidate="novalidate">
                                 <input type="hidden" name="_csrf" id="_csrf" value="<?= Yii::$app->request->getCsrfToken() ?>"/>
-                            <input type="hidden" name="codeProduit" id="codeProduit" value="<?= $produit['code'] ?>"/>
-                        <div id="input-typteEntite" class="col-md-12 input-message">
-                            <p>Spécifiez la forme juridique de votre
-                             entité</p>
-                             <select     id=""  name="typteEntite" class="form-control  custom-select typteEntite " required="">
-                                <option value="" hidden >Faites un choix </option>
+                                 <input type="hidden" name="codeProduit" id="codeProduit" value="<?= $produit?>"/>
+                        <!--begin::Illustration-->
+                        <div class="text-center pb-10  px-5">
+                            <!-- <img src="<?= Yii::$app->request->baseUrl ?>/web/assets/medias/logo/fact.png" alt="" class="mw-100 h-100px h-sm-125px" /> -->
+                        </div>
+                        <!--end::Illustration-->
+
+                        <!--begin::Heading-->
+                        <div class="text-center mb-11">
+                            <!--begin::Title-->
+                            <h1 class="text-dark fw-bolder mb-3">Initier Votre Espace</h1>
+                            <!--end::Title-->
+                            <!--begin::Subtitle-->
+                            <div class="text-gray-500 fw-semibold fs-6">Tous nos services à portée de main </div>
+                            <!--end::Subtitle=-->
+                        </div>
+                        <!--begin::Heading-->
+
+                      <?= Yii::$app->session->getFlash('flashMsg'); Yii::$app->session->removeFlash('flashMsg'); ?>
+
+                        
+                        <div class="fv-row mb-8">
+                            <div class="fs-5 fw-semibold mb-2 required">Spécifiez la forme juridique de votre entité</div>
+                            <select id="" name="typteEntite" class="form-control   border-dark custom-select typteEntite " required="">
+                            <option value="" hidden >Faites un choix </option>
                                 <?php
                                     $typeEntite = yii::$app->nonSqlClass->listEntite();
                                     if(sizeof($typeEntite)>0){
                                         foreach ($typeEntite as $key => $value) {
-                                           echo ' <option value="'.$key.'"  >'. $value.' </option>';
+                                        echo ' <option value="'.$key.'"  >'. $value.' </option>';
                                         }
                                     }
 
                                 
                                 ?>
-                             </select>
-                        </div> 
-                                            
-                        <div id="input-name" class="col-md-12">
-                            <p>Raison sociale *</p>
-                            <input type="text" name="name" class="form-control name" placeholder="Saisissez ici !*" required=""> 
+                            </select>
                         </div>
-                                
-                        <div id="input-email" class="col-md-12">
-                            <p>Email d’administration *</p>
-                            <input type="email" name="email" class="form-control email" placeholder="Saisissez ici !*" required=""> 
-                        </div>
+                       
 
-                        <div id="input-tel" class="col-md-12">
-                            <p>Numéro de téléphone *</p>
-                            <input type="text" name="tel" class="form-control tel" placeholder="Saisissez ici !*" required=""> 
+
+                       
+                        <div class="fv-row mb-8">
+                            <div class="fs-5 fw-semibold mb-2 required">Raison sociale</div>
+                            <input type="text" placeholder="Saisir ici votre nom" name="name" id="name" value="<?= $data['name'] ?>" autocomplete="off" class="form-control  border-dark " />
                         </div>
-                                            
-                        <!-- Contact Form Button -->
-                        <div class="col-lg-12 mt-15 form-btn"> 						                 
-                            <button  class="btn btn-primary tra-black-hover submit">Initier l'espacet</button> 
+                     
+
+                        <!--Debut::Email -->
+                        <div class="fv-row mb-8">
+                            <div class="fs-5 fw-semibold mb-2 required">Email</div>
+                            <input type="text" placeholder="Saisir ici votre email" name="email" id="email" value="<?= $data['email'] ?>" autocomplete="off" class="form-control  border-dark " />
                         </div>
-                                                                        
-                        <!-- Contact Form Message -->
-                        <div class="col-md-12 comment-form-msg text-center">
-                            <div class="sending-msg"><span class="loading"></span></div>
-                        </div>  
-                                                    
-                    </form>									
-            
+                        <!--Fin::Email -->
+
+                         <!--Debut::Email -->
+                         <div class="fv-row mb-8">
+                            <div class="fs-5 fw-semibold mb-2 required">Numéro de téléphone</div>
+                            <input type="text" placeholder="Saisir ici votre email" name="tel" id="tel" value="<?= $data['email'] ?>" autocomplete="off" class="form-control  border-dark " />
+                        </div>
+                        <!--Fin::Email -->
+
+                    
+
+                        <!-- Soumettre le formulaire -->
+                        <div class="d-grid mb-10">
+                            <a href="javascript:;" onClick="doSignUp();" class="btn btn-primary ">
+                                <!--begin::Indicator label-->
+                                <span class="indicator-label">INITIER VOTRE COMPTE</span>
+                                <!--end::Indicator label-->
+                            </a>
+                        </div>
+                        <!--end::Submit button-->
+                    </form>
+                </div>
             </div>
         </div>
-       
     </div>
-    
+</div>
 
-    <?php //require('initierjs.php');?>
- 
+
+<?php require('initierjs.php') ?>

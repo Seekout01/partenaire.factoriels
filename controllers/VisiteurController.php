@@ -20,8 +20,40 @@ class VisiteurController extends Controller
     public function actionIndex(){
         $main = yii::$app->mainCLass;
         $nonSql = yii::$app->nonSqlClass;
+        $visiteur = yii::$app->visiteurClass;
         
- 
+        if(yii::$app->request->isPost){
+            // die();
+            Yii::$app->layout = 'login_ayout';
+            $produit = $_POST['action_on_this'];
+            $typteEntite = $name = $tel = $email = Null;
+            $data =[
+                'tel'=>$tel,
+                'typteEntite'=>$typteEntite,
+                'name'=>$name,
+                'email'=>$email,
+
+            ];
+
+            // $this->layout = 'login_layout';
+            return $this->render('/visiteur/initier/initier.php',['produit'=>$produit,'data'=>$data]);
+        }
+        if(isset($_GET['codeservice'])){
+            $produit = '';
+            $codep = $_GET['codeservice'];
+
+           
+            switch ($codep) {
+                case md5('1'):
+                    $produit =1;
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+            return $this->render('/visiteur/initier/initier.php',['produit'=>$produit]);
+        }
         $columnName = $tableName =$tableNames = $whereValue  = $whereValueSelect= $inColumn = $inValue = $formatBy = $paginate = null;
          $columnName = '*';
          $tableNames = "systeme.produit";
@@ -29,39 +61,53 @@ class VisiteurController extends Controller
          $tableNames = "individus.individus_maindata";
          $personel = $main->selectJoinData($columnName, $tableNames);
          $tableName= "partenaires.partenaire_globaldata";
-         $whereValueSelect["partenaires.partenaire_globaldata.statut"] = "1";
-         $partenaire = $main->selectJoinData($columnName, $tableName,  );
+         $whereValueSelect["partenaires.partenaire_globaldata.statut"] = "'0'";
+         $partenaire = $main->selectJoinData($columnName, $tableName);
          $totalPartenaire=count($partenaire);
-         $totalproduit =count($produit);
          $totalPersonnel =count($personel);
+        //  $comment = $visiteur->comment();
+
+         $columnName = $tableName =$tableNames = $whereValue  = $whereValueSelect= $inColumn = $inValue = $formatBy = $paginate = null;
+         $columnName = '*';
+         $tableNames = "partenaires.contact";
+         $comment = $main->selectJoinData($columnName, $tableNames);
+        //  die(var_dump($comment));
         //  dd($totalPersonnel);
-        return $this->render('/visiteur/index.php',['produit'=>$produit ,'paretenaire'=>$totalPartenaire,'totalproduit'=>$totalproduit,'totalPersonnel'=>$totalPersonnel]);
+        return $this->render('/visiteur/index.php',['produit'=>$produit ,'paretenaire'=>$totalPartenaire,'totalPersonnel'=>$totalPersonnel,'comment'=>$comment]);
     }
 
-    public function actionInitier(){
-        $main = yii::$app->mainCLass;
-        $nonSql = yii::$app->nonSqlClass;
- 
-        $codeProduit = $_GET['codeservice'];
-        $columnName = $tableName =$tableNames = $whereValue  = $whereValueSelect= $inColumn = $inValue = $formatBy = $paginate = null;
-        $columnName = '*';
-        $tableNames = "systeme.produit";
-        $whereValueSelect["systeme.produit.code"] = "'".$codeProduit."'";
 
-        $lisrprod = $main->selectJoinData($columnName, $tableNames, $whereValueSelect);
-        $produit = $lisrprod[0];
-        
-        return $this->render('/visiteur/initier/initier.php',['produit'=>$produit]);
-
-    }
 
     public function actionAddentite(){
+        // die(var_dump($_POST));
         $nonSql = yii::$app->nonSqlClass;
         $main = yii::$app->mainCLass;
         $this->layout = false;
 
         if(Yii::$app->request->isPost)
         {
+
+
+            $typteEntite = $_POST['typteEntite'];$name= $_POST['name'];$tel =$_POST['tel'];$email = $_POST['email']; 
+            
+            $data = [
+                'tel'=>$tel,
+                'typteEntite'=>$typteEntite,
+                'name'=>$name,
+                'email'=>$email,
+                ];
+    
+            //---- S33 ------ @ ----- Preparer champs obligatoires a valider ------ @ ------//
+            $requiredFields = [
+                'tel'=>$tel,
+                'typteEntite'=>$typteEntite,
+                'name'=>$name,
+                'email'=>$email,
+            ];
+
+            $inputFormulaireValides = yii::$app->mainCLass->validerForm(1, $requiredFields);
+            if($inputFormulaireValides !== true)  return $this->redirect(Yii::$app->request->referrer); 
+
             $code = $nonSql->generateUniq();
 
         //    var_dump($_POST);die();
@@ -83,8 +129,16 @@ class VisiteurController extends Controller
             $columnValue["ajouterle"] = date('Y-m-d');    
             if( ($main->insertData($tableName, $columnValue)) ==   1){
                 
-                
-            
+              //ajout dans la table  entite optimision  
+            if($_POST['codeProduit']==1){
+                $tableName = $columnValue = null;
+                $tableName = "optimisions.entreprise";
+                $columnValue["codeglobelentite"] = $code;
+                $columnValue["nom"] = $_POST['name'];
+                $columnValue["email"] = $_POST['email'];    
+                $columnValue["tel"] = $_POST['tel'];
+                $main->insertData($tableName, $columnValue);
+            }
                         $client = new Client([
                             'base_uri' => "https://wp5eed.api.infobip.com/",
                             'headers' => [
@@ -135,7 +189,39 @@ class VisiteurController extends Controller
 
     
     
-                public function actionFinaliser(){
+    public function actionFinaliser(){
+        $main = yii::$app->mainCLass;
+
+                 $code = $_GET['codesepartenariat'];
+                 $columnName = '*';
+                 $tableNames = "partenaires.paretenariat";
+                 $whereValueSelect["partenaires.paretenariat.code"] = "'".$code."'";
+         
+                 $partenaires = $main->selectJoinData($columnName, $tableNames, $whereValueSelect);
+                  
+
+          
+            if(sizeof($partenaires)>0){
+                $partenaire =$partenaires[0];
+                $date =$partenaire["ajouterle"];
+                $compare=Yii::$app->mainCLass->getNbDaybetweenTwoDate($date);
+                if($compare==false){
+                
+            
+                if($partenaire['statut']=='1'){
+                    $notification = yii::$app->nonSqlClass->afficherNofitication(yii::$app->params['attention'], yii::t('app', 'espaceAutorise'));  
+                    Yii::$app->session->setFlash('flashmsg', $notification);
+                    die('compte deja cree');
+                     // return $this->redirect(md5('visiteur_index'));
+                }
+                    }else{
+                    return;
+        
+                }
+            }else{
+                die('l\'url que vous aviez saisie est incorrect');
+
+        }
         $code = $_GET['codesepartenariat'];
          return $this->render('/visiteur/finaliser/finaliser.php',['code'=>$code]);
     }
@@ -152,13 +238,9 @@ class VisiteurController extends Controller
                 $tableNames = "partenaires.paretenariat";
                 $whereValueSelect["partenaires.paretenariat.code "] ="'".$_POST['code']."'";
                 $partenaire = $main->selectJoinData($columnName, $tableNames,$whereValueSelect);
+            
 
-
-                $columnName = '*';
-                $tableNames = "systeme.produit";
-                $whereValueSelect2["systeme.produit.code "] ="'".$partenaire [0]['codeproduit']."'";
-                $produit = $main->selectJoinData($columnName, $tableNames,$whereValueSelect2);
-
+               
            
 
              //mise a jour de la table partenariat]
@@ -173,11 +255,11 @@ class VisiteurController extends Controller
            
 
            //insertion individus main data
-            $code = $nonSql->generateUniq();
+            $codeMain = $nonSql->generateUniq();
 
             $tableName = $columnValue = null;
             $tableName = "individus.individus_maindata";
-            $columnValue["code"] = $code;
+            $columnValue["code"] = $codeMain;
             $columnValue["prenom"] = $_POST['prenom'];
             $columnValue["nom"] = $_POST['nom'];
             $main->insertData($tableName, $columnValue);
@@ -188,50 +270,79 @@ class VisiteurController extends Controller
             $tableName = $columnValue = null;
             $tableName = "individus.individus_contactdata";
             $columnValue["code"] = $codeContact;
-            $columnValue["codeindividumaindata"] = $code;
+            $columnValue["codeindividumaindata"] = $codeMain;
             $columnValue["tel"] = $_POST['tel'];
             $columnValue["email"] = $_POST['mail'];
             $columnValue["ajouterle"] =  date('Y-m-d');  
             $main->insertData($tableName, $columnValue);
 
+               //insertion individus contact data
+               $codeContact = $nonSql->generateUniq();
+
+               $tableName = $columnValue = null;
+               $tableName = "individus.individus_biodata";
+               $columnValue["code"] = $codeContact;
+               $columnValue["codeindividusdatamain"] = $codeMain;
+               $columnValue["ajouterle"] =  date('Y-m-d');  
+               $main->insertData($tableName, $columnValue);
+   
               
             //insertion individus partenaires data
             $codeLien = $nonSql->generateUniq();
             $tableName = $columnValue = null;
             $tableName = "partenaires.lien_individus_partenairie";
             $columnValue["code"] = $codeContact;
-            $columnValue["codeindividusmaindata"] = $code;
-            $columnValue["codepartenaire"] ='916fbcdd2840627d7b1a485005e2d3da50c3b05c67d50cc4';
+            $columnValue["codeindividusmaindata"] = $codeMain;
+            $columnValue["codepartenaire"] =$partenaire[0]['codepartenaireglobaldata'];;
             $columnValue["ajouterle"] =  date('Y-m-d');  
             $main->insertData($tableName, $columnValue);
 
 
 
               //insertion userauth
-              $motPassCrypte = Yii::$app->accessClass->create_pass($_POST['username'],$_POST['password']);
+              $motPassCrypte = Yii::$app->accessClass->create_pass($_POST['Identifiant'],$_POST['mdp']);
 
               $codeLien = $nonSql->generateUniq();
               $tableName = $columnValue = null;
               $tableName = "authentification.userauth";
-              $columnValue["code"] = $code;
-              $columnValue["identifiant"] = $_POST['username'];
+              $columnValue["code"] = $codeMain;
+              $columnValue["identifiant"] = $_POST['Identifiant'];
                $columnValue["motpass"] = $motPassCrypte;
               $main->insertData($tableName, $columnValue);
 
              //insertion individus partenaires prod
+             $menuaction="";
+             switch ( $partenaire[0]['codeproduit']) {
+                case '1':
+                    $menuaction ="repport,repport_ventelist,repport_inventlistarticle,repport_inventanalysearticle,repport_inventhistoriquearticle,repport_inventarticlealertstok,repport_articlestokinitial,repport_venteparproduit,repport_lignesdevente,repport_margeventeparproduit,repport_margenetventeparproduit,repport_fondroulement,repport_depensediver,repport_userdiver,repport_evenementdiver,repport_facture,parametre_users@site_index@site_signagreement@inventaire,inventaire_nproduit,inventaire_produits,inventaire_reaprovision,inventaire_udms,inventaire_cats@vente_simple@fournisseur_themain@paiement_themain@client_themain@diver,diver_charge@parametre,parametre_entreprises,parametre_motifsenrgclient,parametre_campagnes@rg,rg_invent,rg_vente,rg_diver";
+                break;
+                case '4':
+                    $menuaction = "site_index@personel,personel_listepersonnel@notification,notification_index,notification_direct,notification_groupe@config,config_fonction,config_post,config_reference,config_entreprise,config_utilisateur";
+                    break;
+                
+                default:
+                    # code...
+                    break;
+                  }
+
                 $codeLien = $nonSql->generateUniq();
                 $tableName = $columnValue = null;
                 $tableName = "authentification.lien_user_partenaire_prod";
                 $columnValue["code"] = $codeLien;
-                $columnValue["codeindividus"] = $code;
-                $columnValue["codeproduit"] = $produit[0]['code'];
+                $columnValue["statut"] = 1;
+                $columnValue["codeindividus"] = $codeMain;
+                $columnValue["codeproduit"] = $partenaire[0]['codeproduit'];
                 $columnValue["codepartenariat"] = $partenaire[0]['code'];
-                $columnValue["menuaction"] ="'".$produit[0]['actionutilisatuer']."'" ;
+               
+                $columnValue["menuaction"] =$menuaction ;
                 $columnValue["pardefault"] = 1;
                 $main->insertData($tableName, $columnValue);
-               
+              
                 
         }
+        $notification = yii::$app->nonSqlClass->afficherNofitication(yii::$app->params['succes'], yii::t('app', 'envoyersucces'));  
+        Yii::$app->session->setFlash('flashmsg', $notification);
+        return $this->redirect(Yii::$app->request->referrer); 
 
             // $insetionUser =Yii::$app->etablissementClass->create_lien_user_ets($code,$codeEts,$code);
      }
@@ -263,6 +374,46 @@ class VisiteurController extends Controller
 
         return $this->render('/visiteur/contact.php',['produit'=>$lisrprod]);
      }
+
+
+
+     public function actionUnicitelibelle(){
+        Yii::$app->response->format = Response::FORMAT_JSON;  
+
+        switch ($_POST['action_key']) {
+
+            case md5(strtolower('uniReference')):
+                   
+            $libCat =$_POST['reference'];
+            $verifieUniciter = Yii::$app->mainCLass->uniLibelle('atext.reference',$libCat,'libelle');
+            
+            break;
+            case md5(strtolower('unientreprise')):
+            
+                $raisonSocial =$_POST['raisonSocial'];
+                $verifieUniciter = Yii::$app->mainCLass->uniLibelle('atext.partenaire',$raisonSocial,'raisonSocial');
+                
+              break;
+            case md5(strtolower('verifiermail')):
+                           
+                $email =$_POST['email'];
+               
+                $verifieUniciter = Yii::$app->mainCLass->verifie_mail($email);
+
+               return $verifieUniciter;
+
+             break;
+            
+            default:
+                # code...
+                break;
+        }
+
+                return $_POST;
+     }
+
+
+
 }    
 
  

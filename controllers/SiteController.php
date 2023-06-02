@@ -59,6 +59,7 @@ class SiteController extends Controller {
     }
 
 
+    
     public function actionDeconnecter(){
       Yii::$app->getSession()->destroy();
     }

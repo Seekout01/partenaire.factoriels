@@ -21,7 +21,44 @@
       }
       
 
+  //---S33----@---Validation des champs vides----#---//
+  public function validerForm($index=1, $inputArray=Null)
+  {
+    $formValidated = true;
+    $i = $j = 0;
 
+    foreach ($inputArray as $key => $inputVal)
+    {
+      if(isset($key) && (is_array($inputArray[$key]) === true))
+      {
+
+        // //Determiner le type d'input
+        // $inputType = get
+
+        $notNullElem = array_filter($inputArray[$key], null);
+        $count = count($notNullElem);
+
+        if($count < 1){
+          $formValidated = false;
+        }
+
+      }else{
+        if(is_null($inputArray[$key])) $formValidated = false;;
+      }
+
+      //---- @ ---- Check, si 
+      if($formValidated !== true)
+      {
+        //--- @ ----- Set la session flash ----- @ ---//
+        Yii::$app->nonsqlClass->preparerFlashMsg("danger", "interruption","champsObligatoiresVides");
+        return false;
+      }
+
+      $formValidated = true;
+    }
+
+    return $formValidated;
+  }
 
 
       	// ---------- ---------- ---------- INSERT FUNCTION SET ---------- ---------- ---------- //

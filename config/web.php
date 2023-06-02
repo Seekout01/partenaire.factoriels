@@ -96,15 +96,18 @@ $config = [
                 md5('visiteur_index')=>'visiteur/index',
                 md5('visiteur_addentite')=>'visiteur/addentite',
                 md5('visiteur_uniqdata')=>'visiteur/uniqdata',
-                md5('visiteur_initier').'/<codeservice:\w+>'=>'visiteur/initier',
+                md5('visiteur_index').'/<codeservice:\w+>'=>'visiteur/index',
                 md5('visiteur_bienvenue')=>'visiteur/bienvenue',
                 md5('visiteur_finaliser').'/<codesepartenariat:\w+>'=>'visiteur/finaliser',
                 md5('visiteur_addfinaliser')=>'visiteur/addfinaliser',
                 md5('visiteur_contact')=>'visiteur/contact',
 
+                md5('visiteur_unicitelibelle')=>'visiteur/unicitelibelle',
+
                     //BASIQUES RULES
                 md5('site_allajax')=>'site/allajax',
                 md5('site_index')=>'site/index',
+                md5('site_initier')=>'site/initier',
                 md5('deconnexion')=>'site/login',
                 md5('login')=>'site/login',
                 ''=>'site/index',

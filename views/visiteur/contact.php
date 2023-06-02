@@ -89,18 +89,10 @@
 						                <div id="input-subject" class="col-lg-12 input-subject">
 						                    <select id="inlineFormCustomSelect2" name="subject" class="custom-select subject" required="">
 						                        <option value="" hidden>Votre Question sur..</option>  
-                                                <?php
-                                                	if(sizeof($produit)>0){
-								
-                                                        foreach ($produit as $key => $value) {
-
-                                                           echo ' <option value="'.$value['code'].'">'.$value['libelle'].'</option>';  
-
-                                                        }
-
-
-                                                    }?>
-						                      	<option>Autre...</option>
+												<option value="1" >Optimison</option>  
+												<option value="2" >Santeyah</option>  
+												<option value="1" >Daara</option>  
+												<option value="2" >Atext</option>  
 						                    </select>
 						                </div>			                          
 						                 

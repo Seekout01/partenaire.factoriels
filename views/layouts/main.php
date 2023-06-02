@@ -24,42 +24,34 @@ $this->beginPage()
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode("MiRA "."| SOLUTION") ?></title>
     	<!-- FAVICON AND TOUCH ICONS  -->
-		<link rel="shortcut icon" href="@web/Mainassets/images/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="@web/Mainassets/ images/favicon.ico" type="image/x-icon">
-		<link rel="apple-touch-icon" sizes="152x152" href="@web/Mainassets/mages/apple-touch-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="@web/Mainassets/images/apple-touch-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="@web/Mainassets/images/apple-touch-icon-76x76.png">
-		<link rel="apple-touch-icon" href="@web/Mainassets/images/apple-touch-icon.png">
-		<link rel="icon" href="apple-touch-icon.png" type="image/x-icon">
-
+		
 		<!-- GOOGLE FONTS -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet"> 	
-		<link href="https://fonts.googleapis.com/css?family=Muli:400,600,700,800,900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <!-- Google Fonts Roboto -->
+  <!-- MDB -->
 
+  
+
+  <?php
+        //Charger quelques elements de validation
+        require_once(\Yii::$app->basePath.'/extensions/clientValidator/clientSideScript.php');
+        require_once(\Yii::$app->basePath.'/extensions/msg/popupMsg.php');
+    ?>
+    
     <?php $this->head() ?>
 </head>
 
- <body>
+ 	<!--begin::Body-->
+     <body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-toolbar-enabled="true" class="app-default">
+    		<!--begin::Theme mode setup on page load-->
+	
     <?php $this->beginBody() ?>
-        	<!-- PRELOADER SPINNER
-		============================================= -->		
-		<div id="loader-wrapper">
-			<div id="loader"><div class="cssload-box-loading"></div></div>
-		</div>
-
-		<!-- PAGE CONTENT
-		============================================= -->	
-		<div id="page" class="page">
-
-            <?= $this->render('content/header.php', ['baseUrl' => $baseUrl]) ?>
-
-            <?= $this->render('content/content.php', ['content' => $content]) ?>
-
-            <?= $this->render('content/footer.php', ['baseUrl' => $baseUrl]) ?>
-
+    <?= $this->render('content/header.php', ['baseUrl' => $baseUrl]) ?>
+	<?= $this->render('content/content.php', ['content' => $content]) ?>
+	<?= $this->render('content/footer.php', ['baseUrl' => $baseUrl]) ?>
 
     <?php $this->endBody() ?>
-    </body>
+</body>
 
 
 </html>

@@ -10,6 +10,7 @@ require(__DIR__ . '/../extensions/infobip/vendor/autoload.php');
 require(__DIR__ . '/../extensions/picqer/vendor/autoload.php');
 require(__DIR__ . '/../extensions/mpdf/vendor/autoload.php');
 require(__DIR__ . '/../extensions/excel/vendor/autoload.php');
+// require(__DIR__ . '/../extensions/clientValidator/clientSideScript.php');
 $config = require __DIR__ . '/../config/web.php';
 
 (new yii\web\Application($config))->run();
