@@ -41,7 +41,7 @@ $caseValue =  md5(strtolower('uniciteCat'));
 
 
 		var email =document.getElementById('email').value;
-		alert(email);
+		
 
 		$.post(
 			'<?= $url ?>', 

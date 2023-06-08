@@ -1407,7 +1407,7 @@
       
     $verifie =false;
     $APIUrl = 'https://api.email-validator.net/api/verify';
-    $Params = array('EmailAddress' =>$mail, 'APIKey' => 'ev-aade6b558b725714cdad1898e958b67e');
+    $Params = array('EmailAddress' =>$mail, 'APIKey' => 'ev-0d65fc6442e7f61a1ad26dcb566e19ac');
     $Request = http_build_query($Params, '', '&');
     $ctxData = array(
         'method'=>"POST",
