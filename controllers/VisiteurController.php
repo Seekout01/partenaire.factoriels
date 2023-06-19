@@ -150,35 +150,33 @@ class VisiteurController extends Controller
                 
                 
                         
-                    $response = $client->request(
-                        'POST',
-                        'email/2/send',
-                        [
-                            RequestOptions::MULTIPART => [
-                        
-                            ['name' => 'from', 'contents' => "bonjourFactoriels@selfserviceib.com"],
-                            ['name' => 'to', 'contents' =>$_POST['email']],
-                            ['name' => 'subject', 'contents' => 'This is a sample email subject'],
-                            ['name' => 'text', 'contents' => 'This is a sample email message.'],
-                                ['name' => 'html', 'contents' =>  $this->render('/visiteur/bienvenue.php')],
+                                    $response = $client->request(
+                                        'POST',
+                                        'email/2/send',
+                                        [
+                                            RequestOptions::MULTIPART => [
+                                        
+                                            ['name' => 'from', 'contents' => "bonjourFactoriels@selfserviceib.com"],
+                                            ['name' => 'to', 'contents' =>$_POST['email']],
+                                            ['name' => 'subject', 'contents' => 'This is a sample email subject'],
+                                            ['name' => 'text', 'contents' => 'This is a sample email message.'],
+                                                ['name' => 'html', 'contents' =>  $this->render('/visiteur/bienvenue.php')],
+                                            
+                                            ],
+                                        ]
+                                    );
                             
-                            ],
-                        ]
-                    );
-            
-                    echo("HTTP code: " . $response->getStatusCode() . PHP_EOL);
-                    echo("Response body: " . $response->getBody()->getContents() . PHP_EOL);
+                                    echo("HTTP code: " . $response->getStatusCode() . PHP_EOL);
+                                    echo("Response body: " . $response->getBody()->getContents() . PHP_EOL);
 
                     // die();
-                }
-                            $notification = yii::$app->nonSqlClass->afficherNofitication(yii::$app->params['succes'], yii::t('app', 'enrgSuccess'));  
-                            Yii::$app->session->setFlash('flashmsg', $notification);
+                       }
+                           
                             return $this->redirect(Yii::$app->request->referrer); 
                         }
 
                     }else{
-                            $notification = yii::$app->nonSqlClass->afficherNofitication(yii::$app->params['attention'], yii::t('app', 'infosAAffairerVide'));
-                            Yii::$app->session->setFlash('flashmsg', $notification);
+                 
                             return $this->redirect(Yii::$app->request->referrer); 
                     };
                
@@ -191,7 +189,7 @@ class VisiteurController extends Controller
     
     public function actionFinaliser(){
         $main = yii::$app->mainCLass;
-
+               
                  $code = $_GET['codesepartenariat'];
                  $columnName = '*';
                  $tableNames = "partenaires.paretenariat";
@@ -199,12 +197,13 @@ class VisiteurController extends Controller
          
                  $partenaires = $main->selectJoinData($columnName, $tableNames, $whereValueSelect);
                   
-
+                
           
             if(sizeof($partenaires)>0){
                 $partenaire =$partenaires[0];
                 $date =$partenaire["ajouterle"];
                 $compare=Yii::$app->mainCLass->getNbDaybetweenTwoDate($date);
+           
                 if($compare==false){
                 
             
@@ -215,9 +214,10 @@ class VisiteurController extends Controller
                      // return $this->redirect(md5('visiteur_index'));
                 }
                     }else{
-                    return;
+                    // return;
         
-                }
+                }      
+
             }else{
                 die('l\'url que vous aviez saisie est incorrect');
 
@@ -313,10 +313,11 @@ class VisiteurController extends Controller
              //insertion individus partenaires prod
              $menuaction="";
              switch ( $partenaire[0]['codeproduit']) {
-                case '1':
+                case yii::$app->params['Optimisons'] :
+                  
                     $menuaction ="repport,repport_ventelist,repport_inventlistarticle,repport_inventanalysearticle,repport_inventhistoriquearticle,repport_inventarticlealertstok,repport_articlestokinitial,repport_venteparproduit,repport_lignesdevente,repport_margeventeparproduit,repport_margenetventeparproduit,repport_fondroulement,repport_depensediver,repport_userdiver,repport_evenementdiver,repport_facture,parametre_users@site_index@site_signagreement@inventaire,inventaire_nproduit,inventaire_produits,inventaire_reaprovision,inventaire_udms,inventaire_cats@vente_simple@fournisseur_themain@paiement_themain@client_themain@diver,diver_charge@parametre,parametre_entreprises,parametre_motifsenrgclient,parametre_campagnes@rg,rg_invent,rg_vente,rg_diver";
                 break;
-                case '4':
+                case yii::$app->params['Atex'] :
                     $menuaction = "site_index@personel,personel_listepersonnel@notification,notification_index,notification_direct,notification_groupe@config,config_fonction,config_post,config_reference,config_entreprise,config_utilisateur";
                     break;
                 
@@ -340,8 +341,7 @@ class VisiteurController extends Controller
               
                 
         }
-        $notification = yii::$app->nonSqlClass->afficherNofitication(yii::$app->params['succes'], yii::t('app', 'envoyersucces'));  
-        Yii::$app->session->setFlash('flashmsg', $notification);
+  
         return $this->redirect(Yii::$app->request->referrer); 
 
             // $insetionUser =Yii::$app->etablissementClass->create_lien_user_ets($code,$codeEts,$code);
@@ -379,7 +379,7 @@ class VisiteurController extends Controller
 
      public function actionUnicitelibelle(){
         Yii::$app->response->format = Response::FORMAT_JSON;  
-
+        $verifieUniciter =false;
         switch ($_POST['action_key']) {
 
             case md5(strtolower('uniReference')):
@@ -397,16 +397,21 @@ class VisiteurController extends Controller
             case md5(strtolower('verifiermail')):
                            
                 $email =$_POST['email'];
-               
-                $verifieUniciter = Yii::$app->mainCLass->verifie_mail($email);
+                $verifie=  yii::$app->mainCLass->verifData($email,'individus.individus_contactdata','email');
+                if($verifie){
+                    // $verifieUniciter = Yii::$app->mainCLass->verifie_mail($email);
 
-               return $verifieUniciter;
+                }
+
+               return true;
 
              break;
             
             default:
                 # code...
+
                 break;
+                return $verifieUniciter;
         }
 
                 return $_POST;

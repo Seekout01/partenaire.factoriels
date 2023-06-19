@@ -19,7 +19,7 @@
                         <!--end::Illustration-->
 
                         <!--begin::Heading-->
-                        <div class="text-center mb-11">
+                        <div class="text-center mb-11 mt-5">
                             <!--begin::Title-->
                             <h1 class="text-dark fw-bolder mb-3">Initier Votre Espace</h1>
                             <!--end::Title-->
@@ -34,7 +34,7 @@
                         
                         <div class="fv-row mb-8">
                             <div class="fs-5 fw-semibold mb-2 required">Spécifiez la forme juridique de votre entité</div>
-                            <select id="" name="typteEntite" class="form-control   border-dark custom-select typteEntite " required="">
+                            <select id="" name="typteEntite" class="form-select   border-dark custom-select typteEntite " required="">
                             <option value="" hidden >Faites un choix </option>
                                 <?php
                                     $typeEntite = yii::$app->nonSqlClass->listEntite();
@@ -73,16 +73,15 @@
                         <!--Fin::Email -->
 
                     
-
-                        <!-- Soumettre le formulaire -->
-                        <div class="d-grid mb-10">
-                            <a href="javascript:;" onClick="doSignUp();" class="btn btn-primary ">
-                                <!--begin::Indicator label-->
-                                <span class="indicator-label">INITIER VOTRE COMPTE</span>
-                                <!--end::Indicator label-->
-                            </a>
-                        </div>
-                        <!--end::Submit button-->
+                        <button type="button"  onClick="doSignUp();" class="btn btn-primary me-10" id="kt_button_1">
+                            <span class="indicator-label">
+                                INITIER VOTRE ESPACE
+                            </span>
+                            <span class="indicator-progress">
+                                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+       
                     </form>
                 </div>
             </div>
